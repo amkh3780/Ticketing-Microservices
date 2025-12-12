@@ -9,6 +9,7 @@ interface Payload {
 const expirationQueue = new Queue<Payload>("order:expiration", {
   redis: {
     host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD,
   },
 });
 //Define what we want to do whenever we receive a job

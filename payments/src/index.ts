@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 import { OrderCreatedListener } from './events/listeners/order-created-listener';
-// import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
@@ -88,7 +88,7 @@ async function start() {
 
   // Listeners
   new OrderCreatedListener(natsWrapper.client).listen();
-  // new OrderCancelledListener(natsWrapper.client).listen();
+  new OrderCancelledListener(natsWrapper.client).listen();
 
   await connectMongo(process.env.MONGO_URI!);
 
@@ -101,4 +101,3 @@ start().catch((e) => {
   console.error('Fatal startup error:', e);
   process.exit(1);
 });
-

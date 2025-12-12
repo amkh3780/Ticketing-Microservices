@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
+    "start": "node build/index.js",
+    "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "build": "tsc -p . --outDir build --rootDir src",
     "test": "jest --watchAll --no-cache",
     "test:ci": "jest --runInBand --detectOpenHandles --forceExit"
   },
@@ -24,23 +26,28 @@
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.2",
     "cookie-session": "^2.0.0",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^6.11.2",
     "express-validator": "^7.0.1",
-    "i": "^0.3.7",
+    "helmet": "^7.0.0",
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.3",
     "mongoose-update-if-current": "^1.4.0",
-    "npm": "^10.1.0",
-    "ts-node-dev": "^2.0.0",
-    "typescript": "^5.1.6"
+    "pino": "^8.15.0",
+    "pino-http": "^8.5.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.3",
+    "@types/cors": "^2.8.17",
+    "@types/helmet": "^4.0.0",
     "@types/supertest": "^2.0.12",
     "jest": "^29.6.3",
     "mongodb-memory-server": "^8.15.1",
     "supertest": "^6.3.3",
-    "ts-jest": "^29.1.1"
+    "ts-jest": "^29.1.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.1.6"
   }
 }

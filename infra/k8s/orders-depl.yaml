@@ -12,28 +12,74 @@ spec:
       labels:
         app: orders
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
       containers:
         - name: orders
           image: srayen/orders
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /api/orders/healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            httpGet:
+              path: /api/orders/healthz
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            failureThreshold: 6
           env:
             - name: NODE_ENV
-              value: "test"
+              value: "production"
             # we will use the ticket's pod name as our NATS client ID (it's randomly generated & unique )
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: NATS_URL
-              value: "nats://nats-srv:4222"
-            - name: NATS_CLUSTER_ID
-              value: ticketing
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_USERNAME
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: MONGO_PASSWORD
             - name: MONGO_URI
-              value: "mongodb://orders-mongo-srv:27017/orders"
+              value: "mongodb://$(MONGO_USERNAME):$(MONGO_PASSWORD)@orders-mongo-srv:27017/orders?authSource=admin"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
+            - name: NATS_URL
+              value: "nats://$(NATS_AUTH_TOKEN)@nats-srv:4222"
+            - name: NATS_CLUSTER_ID
+              value: ticketing
 ---
 apiVersion: v1
 kind: Service
