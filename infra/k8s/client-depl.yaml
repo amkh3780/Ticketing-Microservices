@@ -15,7 +15,9 @@ spec:
       containers:
         - name: client
           image: srayen/client
-
+          env:
+            - name: NODE_ENV
+              value: "test"  
 ---
 apiVersion: v1
 kind: Service
