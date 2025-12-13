@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-redis-depl
+spec:
+  template:
+    spec:
+      volumes:
+        - name: redis-data
+          emptyDir: {}
+      containers:
+        - name: expiration-redis
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data

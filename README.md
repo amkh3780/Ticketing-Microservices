@@ -130,3 +130,19 @@ Be sure to expose the ingress-nginx-controller with:
 
 
 
+## Running in CI / KIND
+
+Use the CI overlay to run without TLS or PVCs and with dummy secrets:
+
+```bash
+# Apply CI-friendly manifests (no TLS, emptyDir storage)
+kustomize build infra/k8s/overlays/ci | kubectl apply -f -
+```
+
+Notes:
+- TLS is disabled in the CI overlay; do not use in prod.
+- PVCs are removed in favor of emptyDir for KIND/CI; data is ephemeral.
+- Secrets use deterministic placeholder values from `infra/k8s/secrets.yaml`.
+- Services still expect NATS/Mongo/Redis auth per the manifests.
+
+GitHub Actions CI (`.github/workflows/ci.yml`) runs `npm ci`, `npm run build`, and tests for all services (excluding client tests) using Node 20.
