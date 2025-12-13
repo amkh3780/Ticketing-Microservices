@@ -15,3 +15,4 @@ patchesStrategicMerge:
   - patch-imagepullsecret.yaml
   - patch-nats-env.yaml
   - patch-nats-no-auth.yaml
+  - patch-probes-ci.yaml

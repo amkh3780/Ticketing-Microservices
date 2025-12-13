@@ -102,3 +102,11 @@ spec:
           env:
             - name: npm_config_cache
               value: /tmp/.npm
+          securityContext:
+            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: npm-cache
+              mountPath: /tmp/.npm
+      volumes:
+        - name: npm-cache
+          emptyDir: {}
