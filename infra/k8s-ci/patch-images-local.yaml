@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: auth
+          image: srayen/auth:local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: tickets
+          image: srayen/tickets:local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: orders
+          image: srayen/orders:local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: payments
+          image: srayen/payments:local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: expiration
+          image: srayen/expiration:local
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: client
+          image: srayen/client:local
