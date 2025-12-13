@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-mongo-depl
+spec:
+  template:
+    spec:
+      volumes:
+        - name: mongo-data
+          emptyDir: {}
+      containers:
+        - name: tickets-mongo
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
