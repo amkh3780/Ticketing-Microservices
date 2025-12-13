@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: nats
-          command: ["nats-streaming-server"]
+          command: ["/nats-streaming-server"]
           args:
             - "-p"
             - "4222"
