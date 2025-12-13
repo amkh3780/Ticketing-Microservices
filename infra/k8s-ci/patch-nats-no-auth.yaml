@@ -7,18 +7,21 @@ spec:
     spec:
       containers:
         - name: nats
-          command:
-            - /bin/sh
-            - -c
-            - >
-              nats-streaming-server
-              -p 4222
-              -m 8222
-              -hbi 5s
-              -hbt 5s
-              -hbf 2
-              -SD
-              -cid ticketing
+          command: ["nats-streaming-server"]
+          args:
+            - "-p"
+            - "4222"
+            - "-m"
+            - "8222"
+            - "-hbi"
+            - "5s"
+            - "-hbt"
+            - "5s"
+            - "-hbf"
+            - "2"
+            - "-SD"
+            - "-cid"
+            - "ticketing"
           securityContext:
             readOnlyRootFilesystem: false
           volumeMounts:
