@@ -12,3 +12,4 @@ patchesStrategicMerge:
   - patch-redis-emptydir.yaml
   - patch-delete-pvcs.yaml
   - patch-images-local.yaml
+  - patch-imagepullsecret.yaml
