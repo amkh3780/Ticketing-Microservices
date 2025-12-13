@@ -19,3 +19,11 @@ spec:
               -hbf 2
               -SD
               -cid ticketing
+          securityContext:
+            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: nats-data
+              mountPath: /data
+      volumes:
+        - name: nats-data
+          emptyDir: {}
