@@ -9,6 +9,12 @@ spec:
         - name: auth
           image: ghcr.io/amkh3780/auth:dev
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -21,6 +27,12 @@ spec:
         - name: tickets
           image: ghcr.io/amkh3780/tickets:dev
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -33,6 +45,12 @@ spec:
         - name: orders
           image: ghcr.io/amkh3780/orders:dev
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -45,6 +63,12 @@ spec:
         - name: payments
           image: ghcr.io/amkh3780/payments:dev
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,6 +81,12 @@ spec:
         - name: expiration
           image: ghcr.io/amkh3780/expiration:dev
           imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -69,3 +99,6 @@ spec:
         - name: client
           image: ghcr.io/amkh3780/client:dev
           imagePullPolicy: IfNotPresent
+          env:
+            - name: npm_config_cache
+              value: /tmp/.npm

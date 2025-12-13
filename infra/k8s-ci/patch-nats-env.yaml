@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: nats
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
