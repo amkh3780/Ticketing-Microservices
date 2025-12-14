@@ -8,14 +8,14 @@ spec:
       containers:
         - name: tickets
           readinessProbe:
-            httpGet: null
+            $patch: replace
             tcpSocket:
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 6
           livenessProbe:
-            httpGet: null
+            $patch: replace
             tcpSocket:
               port: 3000
             initialDelaySeconds: 10
@@ -32,14 +32,14 @@ spec:
       containers:
         - name: orders
           readinessProbe:
-            httpGet: null
+            $patch: replace
             tcpSocket:
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 6
           livenessProbe:
-            httpGet: null
+            $patch: replace
             tcpSocket:
               port: 3000
             initialDelaySeconds: 10
