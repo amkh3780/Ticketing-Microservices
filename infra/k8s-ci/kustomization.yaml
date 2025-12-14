@@ -11,8 +11,9 @@ patchesStrategicMerge:
   - patch-payments-mongo-emptydir.yaml
   - patch-redis-emptydir.yaml
   - patch-delete-pvcs.yaml
-  - patch-images-local.yaml
-  - patch-imagepullsecret.yaml
-  - patch-nats-env.yaml
-  - patch-nats-no-auth.yaml
-  - patch-probes-ci.yaml
+- patch-images-local.yaml
+- patch-imagepullsecret.yaml
+- patch-nats-env.yaml
+- patch-nats-no-auth.yaml
+- patch-probes-ci.yaml
+- patch-client-probes-ci.yaml
