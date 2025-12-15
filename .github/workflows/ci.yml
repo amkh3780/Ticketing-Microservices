@@ -12,6 +12,7 @@ jobs:
     env:
       STRIPE_TESTING_KEY: sk_test_dummy
       JWT_KEY: test_jwt_key
+      MONGOMS_VERSION: "7.0.14"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
