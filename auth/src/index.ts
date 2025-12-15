@@ -50,4 +50,3 @@ start().catch((e) => {
   console.error('Fatal startup error:', e);
   process.exit(1);
 });
-
