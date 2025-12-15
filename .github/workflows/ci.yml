@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       STRIPE_TESTING_KEY: sk_test_dummy
       JWT_KEY: test_jwt_key
