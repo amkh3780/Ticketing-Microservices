@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: auth
+          image: ghcr.io/amkh3780/auth:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: tickets
+          image: ghcr.io/amkh3780/tickets:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: orders
+          image: ghcr.io/amkh3780/orders:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: payments
+          image: ghcr.io/amkh3780/payments:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: expiration
+          image: ghcr.io/amkh3780/expiration:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  template:
+    spec:
+      containers:
+        - name: client
+          image: ghcr.io/amkh3780/client:dev
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: npm_config_cache
+              value: /tmp/.npm
+          securityContext:
+            readOnlyRootFilesystem: false
+          volumeMounts:
+            - name: npm-cache
+              mountPath: /tmp/.npm
+      volumes:
+        - name: npm-cache
+          emptyDir: {}

@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-mongo-depl
+spec:
+  template:
+    spec:
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim: null
+          emptyDir: {}
+      containers:
+        - name: auth-mongo
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db

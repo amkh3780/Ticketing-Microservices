@@ -12,25 +12,45 @@ spec:
       labels:
         app: nats
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+        fsGroup: 1001
       containers:
         - name: nats
           image: nats-streaming:0.17.0
-          args:
-            [
-              '-p',
-              '4222',
-              '-m',
-              '8222',
-              '-hbi',
-              '5s',
-              '-hbt',
-              '5s',
-              '-hbf',
-              '2',
-              '-SD',
-              '-cid',
-              'ticketing',
-            ]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          command:
+            - /bin/sh
+            - -c
+            - >
+              nats-streaming-server
+              -p 4222
+              -m 8222
+              -hbi 5s
+              -hbt 5s
+              -hbf 2
+              -SD
+              -cid ticketing
+              -auth "${NATS_AUTH_TOKEN}"
+          env:
+            - name: NATS_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-auth-secret
+                  key: NATS_AUTH_TOKEN
 ---
 apiVersion: v1
 kind: Service

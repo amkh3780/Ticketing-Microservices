@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      STRIPE_TESTING_KEY: sk_test_dummy
+      JWT_KEY: test_jwt_key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install deps (services)
+        run: |
+          for dir in auth tickets orders payments expiration client; do
+            echo "Installing in $dir"
+            cd "$dir"
+            npm ci
+            cd ..
+          done
+      - name: Build services
+        run: |
+          for dir in auth tickets orders payments expiration client; do
+            echo "Building $dir"
+            cd "$dir"
+            npm run build
+            cd ..
+          done
+      - name: Test services
+        run: |
+          for dir in auth tickets orders payments expiration; do
+            echo "Testing $dir"
+            cd "$dir"
+            npm test -- --runInBand --forceExit
+            cd ..
+          done

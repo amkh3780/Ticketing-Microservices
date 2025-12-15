@@ -2,7 +2,7 @@ import { Message } from "node-nats-streaming";
 import { queueGroupName } from "./queue-group-name";
 import { Listener, OrderCreatedEvent, Subjects } from "@srayen-tickets/common";
 import { Ticket } from "../../models/ticket";
-import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher ";
+import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   readonly subject = Subjects.OrderCreated;

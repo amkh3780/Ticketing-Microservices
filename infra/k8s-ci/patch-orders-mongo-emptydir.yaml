@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-mongo-depl
+spec:
+  template:
+    spec:
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim: null
+          emptyDir: {}
+      containers:
+        - name: orders-mongo
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db

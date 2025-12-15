@@ -1,0 +1,60 @@
+############################
+# Local testing & debug
+############################
+tools/testing/runtime/
+tools/testing/*.log
+tools/testing/*.tmp
+tools/testing/*.out
+
+# Large local binaries (not committed)
+tools/testing/skaffold
+
+############################
+# Node.js
+############################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+############################
+# Environment & secrets
+############################
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.crt
+*.pfx
+
+############################
+# Kubernetes local artifacts
+############################
+*.kubeconfig
+kubeconfig
+.kube/
+kubectl-cache/
+
+############################
+# OS / Editor / IDE
+############################
+.DS_Store
+Thumbs.db
+
+.idea/
+.vscode/
+*.swp
+*.swo
+
+############################
+# Build & temp
+############################
+dist/
+build/
+coverage/
+.tmp/
+.cache/
+
