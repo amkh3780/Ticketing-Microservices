@@ -11,14 +11,13 @@ declare global {
   }
 }
 
-let mongo: any;
+let mongo: MongoMemoryServer;
 //THIS will starts before Testing ...
 
 beforeAll(async () => {
-  process.env.JWT_KEY = "anything"; //This line to prevent THe necessity of ENV var
-  const mongo = new MongoMemoryServer();
-  await mongo.start(); //Start the MongoDB instance
-  const mongoUri = await mongo.getUri(); //Get URL to connect to it
+  process.env.JWT_KEY = "anything"; //This line to prevent The necessity of ENV var
+  mongo = await MongoMemoryServer.create();
+  const mongoUri = mongo.getUri(); //Get URL to connect to it
   await mongoose.connect(mongoUri);
 });
 
