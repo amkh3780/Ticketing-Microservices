@@ -18,11 +18,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install OpenSSL 1.1 compatibility (mongodb-memory-server)
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libssl-dev
-          sudo ln -sf /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libssl.so.1.1 || true
-          sudo ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 || true
+          sudo apt-get install -y wget ca-certificates
+          wget -q -O /tmp/libssl1.1.deb "http://archive.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb"
+          sudo dpkg -i /tmp/libssl1.1.deb || sudo apt-get -f install -y
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
