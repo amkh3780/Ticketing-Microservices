@@ -10,13 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install libcrypto workaround for mongodb-memory-server
+      - name: Install libssl1.1 workaround for mongodb-memory-server
         run: |
           sudo apt-get update
-          sudo apt-get install -y libssl1.1 || sudo apt-get install -y libssl-1.1 || {
-            sudo apt-get install -y libssl-dev || true
-            sudo ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so.3 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 || true
-          }
+          sudo apt-get install -y libssl-dev
+          sudo ln -sf /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libssl.so.1.1 || true
+          sudo ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 || true
       - name: Run auth tests
         run: |
           cd auth
