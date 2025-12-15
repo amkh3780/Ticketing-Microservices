@@ -148,6 +148,3 @@ Notes:
 GitHub Actions CI (`.github/workflows/ci.yml`) runs `npm ci`, `npm run build`, and tests for all services (excluding client tests) using Node 20.
 
 _Test note: using this branch to verify contribution visibility after time fix._
-
-_Test note: using this branch to verify contribution visibility after time fix._
-_Test note: using this branch to verify contribution visibility after time fix._
