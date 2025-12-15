@@ -42,6 +42,6 @@ jobs:
           for dir in auth tickets orders payments expiration; do
             echo "Testing $dir"
             cd "$dir"
-            npm test -- --runInBand --forceExit
+            npm test -- --runInBand --detectOpenHandles --forceExit
             cd ..
           done
