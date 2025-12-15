@@ -18,6 +18,7 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
+          cache-dependency-path: "**/package-lock.json"
       - name: Install deps (services)
         run: |
           for dir in auth tickets orders payments expiration client; do
