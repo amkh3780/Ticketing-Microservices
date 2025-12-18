@@ -17,13 +17,22 @@ let mongo: MongoMemoryServer;
 
 beforeAll(async () => {
   process.env.JWT_KEY = "anything"; //This line to prevent The necessity of ENV var
+  const mongoVersion = process.env.MONGOMS_VERSION || "7.0.5";
   mongo = await MongoMemoryServer.create({
     binary: {
-      version: process.env.MONGOMS_VERSION || "7.0.14",
+      version: mongoVersion,
     },
     instance: {
       storageEngine:
         (process.env.MONGOMS_STORAGE_ENGINE as StorageEngineName) || "wiredTiger",
+    },
+    download: {
+      platform: "linux",
+      arch: "x86_64",
+      os: {
+        dist: "ubuntu",
+        release: "22.04",
+      },
     },
   });
   const mongoUri = mongo.getUri(); //Get URL to connect to it
