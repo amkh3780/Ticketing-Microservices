@@ -7,7 +7,7 @@
     "start": "node build/index.js",
     "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
     "build": "tsc -p . --outDir build --rootDir src",
-    "test": "jest --watchAll --no-cache",
+    "test": "jest --runInBand --no-cache --forceExit",
     "test:ci": "jest --runInBand --detectOpenHandles --forceExit"
   },
   "jest": {

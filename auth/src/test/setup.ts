@@ -1,4 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
+type StorageEngineName = "wiredTiger" | "ephemeralForTest" | "mmapv1" | undefined;
 import mongoose from "mongoose";
 import { app } from "../app";
 import request from "supertest";
@@ -11,14 +12,30 @@ declare global {
   }
 }
 
-let mongo: any;
+let mongo: MongoMemoryServer;
 //THIS will starts before Testing ...
 
 beforeAll(async () => {
-  process.env.JWT_KEY = "anything"; //This line to prevent THe necessity of ENV var
-  const mongo = new MongoMemoryServer();
-  await mongo.start(); //Start the MongoDB instance
-  const mongoUri = await mongo.getUri(); //Get URL to connect to it
+  process.env.JWT_KEY = "anything"; //This line to prevent The necessity of ENV var
+  const mongoVersion = process.env.MONGOMS_VERSION || "7.0.5";
+  mongo = await MongoMemoryServer.create({
+    binary: {
+      version: mongoVersion,
+    },
+    instance: {
+      storageEngine:
+        (process.env.MONGOMS_STORAGE_ENGINE as StorageEngineName) || "wiredTiger",
+    },
+    download: {
+      platform: "linux",
+      arch: "x86_64",
+      os: {
+        dist: "ubuntu",
+        release: "22.04",
+      },
+    },
+  });
+  const mongoUri = mongo.getUri(); //Get URL to connect to it
   await mongoose.connect(mongoUri);
 });
 
