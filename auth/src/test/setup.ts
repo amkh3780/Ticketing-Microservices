@@ -1,4 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
+import type { StorageEngine } from "mongodb-memory-server-core/lib/types";
 import mongoose from "mongoose";
 import { app } from "../app";
 import request from "supertest";
@@ -21,7 +22,8 @@ beforeAll(async () => {
       version: process.env.MONGOMS_VERSION || "7.0.14",
     },
     instance: {
-      storageEngine: process.env.MONGOMS_STORAGE_ENGINE || "wiredTiger",
+      storageEngine:
+        (process.env.MONGOMS_STORAGE_ENGINE as StorageEngine) || "wiredTiger",
     },
   });
   const mongoUri = mongo.getUri(); //Get URL to connect to it
