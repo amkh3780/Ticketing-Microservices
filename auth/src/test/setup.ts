@@ -1,5 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
-import type { StorageEngine } from "mongodb-memory-server-core/lib/types";
+type StorageEngineName = "wiredTiger" | "ephemeralForTest" | "mmapv1" | undefined;
 import mongoose from "mongoose";
 import { app } from "../app";
 import request from "supertest";
@@ -23,7 +23,7 @@ beforeAll(async () => {
     },
     instance: {
       storageEngine:
-        (process.env.MONGOMS_STORAGE_ENGINE as StorageEngine) || "wiredTiger",
+        (process.env.MONGOMS_STORAGE_ENGINE as StorageEngineName) || "wiredTiger",
     },
   });
   const mongoUri = mongo.getUri(); //Get URL to connect to it
