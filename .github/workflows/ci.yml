@@ -13,7 +13,7 @@ jobs:
       CI: true
       STRIPE_TESTING_KEY: sk_test_dummy
       JWT_KEY: test_jwt_key
-      MONGOMS_VERSION: "6.0.6"
+      MONGOMS_VERSION: "7.0.14"
       MONGOMS_STORAGE_ENGINE: "wiredTiger"
     steps:
       - uses: actions/checkout@v4
@@ -21,9 +21,13 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget ca-certificates
-          wget -q -O /tmp/libssl1.1.deb "http://archive.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb"
-          sudo dpkg -i /tmp/libssl1.1.deb || sudo apt-get -f install -y
+          sudo apt-get install -y wget ca-certificates libssl-dev || true
+          wget -q -O /tmp/libssl1.1.deb "http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.1/libssl1.1_1.1.1f-1ubuntu2.16_amd64.deb" || true
+          if [ -f /tmp/libssl1.1.deb ]; then
+            sudo dpkg -i /tmp/libssl1.1.deb || sudo apt-get -f install -y || true
+          fi
+          sudo ln -sf /usr/lib/x86_64-linux-gnu/libssl.so.3 /usr/lib/x86_64-linux-gnu/libssl.so.1.1 || true
+          sudo ln -sf /usr/lib/x86_64-linux-gnu/libcrypto.so.3 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 || true
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
