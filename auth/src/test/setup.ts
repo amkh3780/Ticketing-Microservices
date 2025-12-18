@@ -16,7 +16,14 @@ let mongo: MongoMemoryServer;
 
 beforeAll(async () => {
   process.env.JWT_KEY = "anything"; //This line to prevent The necessity of ENV var
-  mongo = await MongoMemoryServer.create();
+  mongo = await MongoMemoryServer.create({
+    binary: {
+      version: process.env.MONGOMS_VERSION || "7.0.14",
+    },
+    instance: {
+      storageEngine: process.env.MONGOMS_STORAGE_ENGINE || "wiredTiger",
+    },
+  });
   const mongoUri = mongo.getUri(); //Get URL to connect to it
   await mongoose.connect(mongoUri);
 });
