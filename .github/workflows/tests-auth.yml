@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MONGOMS_VERSION: "6.0.15"
-      MONGOMS_PLATFORM: "ubuntu22.04"
       MONGOMS_STORAGE_ENGINE: "wiredTiger"
     steps:
       - uses: actions/checkout@v4

@@ -14,7 +14,6 @@ jobs:
       STRIPE_TESTING_KEY: sk_test_dummy
       JWT_KEY: test_jwt_key
       MONGOMS_VERSION: "6.0.15"
-      MONGOMS_PLATFORM: "ubuntu22.04"
       MONGOMS_STORAGE_ENGINE: "wiredTiger"
     steps:
       - uses: actions/checkout@v4
