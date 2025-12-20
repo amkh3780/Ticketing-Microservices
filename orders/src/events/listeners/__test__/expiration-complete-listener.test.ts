@@ -10,6 +10,10 @@ import { Ticket } from "../../../models/ticket";
 import { ExpirationCompleteListener } from "../expiration-complete-listener";
 import { Order } from "../../../models/order";
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 const setup = async () => {
   //create instance of the listener
   const listener = new ExpirationCompleteListener(natsWrapper.client);

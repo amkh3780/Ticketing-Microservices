@@ -6,7 +6,7 @@ import { OrderStatus } from "@srayen-tickets/common";
 import { stripe } from "../../stripe";
 import { Payment } from "../../models/payment";
 
-// jest.mock("../../stripe.ts");
+jest.mock("../../stripe.ts");
 
 it("returns a 400 when orderId is not a valid ObjectId", async () => {
   await request(app)
