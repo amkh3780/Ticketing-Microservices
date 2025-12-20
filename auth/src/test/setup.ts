@@ -26,14 +26,6 @@ beforeAll(async () => {
       storageEngine:
         (process.env.MONGOMS_STORAGE_ENGINE as StorageEngineName) || "wiredTiger",
     },
-    download: {
-      platform: "linux",
-      arch: "x86_64",
-      os: {
-        dist: "ubuntu",
-        release: "22.04",
-      },
-    },
   });
   const mongoUri = mongo.getUri(); //Get URL to connect to it
   await mongoose.connect(mongoUri);
