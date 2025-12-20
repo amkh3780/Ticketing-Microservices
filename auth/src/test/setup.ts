@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import { app } from "../app";
 import request from "supertest";
 
+// Allow enough time for initial MongoDB binary download on fresh CI runners
+jest.setTimeout(30_000);
+
 declare global {
   namespace NodeJS {
     interface Global {
